@@ -1,7 +1,7 @@
 <?php
 
 use RobinMglsk\DataMerge;
-require_once('../../src/DataMergePHP/DataMerge.php');
+require_once('../../vendor/autoload.php');
 
 $theData = [
     'firstname' => 'John',
