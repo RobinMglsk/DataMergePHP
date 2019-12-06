@@ -27,6 +27,10 @@ class DataMerge
     public function setVars($vars)
     {
         $this->vars = [];
+
+        // Flatten array
+        $vars = $this->arrayToDot($vars);
+
         foreach ($vars as $tag => $value) {
             if (!is_array($value) && !is_object($value)) {
                 $this->vars[$tag] = strval($value);
@@ -189,5 +193,18 @@ class DataMerge
             }
         }
         return $string;
+    }
+
+    private function arrayToDot($array, $prepend = '')
+    {
+        $results = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value) && ! empty($value)) {
+                $results = array_merge($results, $this->arrayToDot($value, $prepend.$key.'.'));
+            } else {
+                $results[$prepend.$key] = $value;
+            }
+        }
+        return $results;
     }
 }
